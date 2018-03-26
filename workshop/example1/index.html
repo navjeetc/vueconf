@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    {{ message }}
+  </div>
+
+  <div id="app-2">
+    <span v-bind:title="hover_message">
+      Hover your mouse over me for a few seconds
+      to see my dynamically bound title!
+    </span>
+  </div>
+  
+  <div id="app-3">
+    <span v-if="seen">Now you see me</span>
+  </div>
+  
+  <div id="app-4">
+    <ol>
+      <li v-for="todo in todos">
+        {{ todo.text }}
+      </li>
+    </ol>
+  </div>
+  
+  <div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click='reverseMessage'>Reverse Message</button>
+    <ol>
+      <!-- Create an instance of the todo-item component -->
+      <todo-item></todo-item>
+    </ol>
+  </div>
+  
+  <div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+    
+    <ol>
+      <!-- Create an instance of the todo-item component -->
+      <todo-item></todo-item>
+    </ol>
+    
+  </div>
+  
+ <div id="app-7">
+   <ol>
+     <!--
+       Now we provide each todo-item with the todo object
+       it's representing, so that its content can be dynamic.
+       We also need to provide each component with a "key",
+       which will be explained later.
+     -->
+     <todo-item
+       v-for="listItem in groceryList"
+       v-bind:todo-list-item="listItem"
+       v-bind:key="listItem.id">
+     </todo-item>
+   </ol>
+ </div>
+ 
+  
+  <script>
+    
+    Vue.component('todo-item', {
+      // The todo-item component now accepts a
+      // "prop", which is like a custom attribute.
+      // This prop is called todo.
+      props: ['todoListItem'],
+      template: '<li>{{ todoListItem.text }}</li>'
+    })
+     
+    var app7 = new Vue({
+      el: '#app-7',
+      data: {
+        groceryList: [
+          { id: 0, text: 'Vegetables' },
+          { id: 1, text: 'Cheese' },
+          { id: 2, text: 'Whatever else humans are supposed to eat' }
+        ]
+      }
+    })
+    
+    var app6 = new Vue({
+      el: '#app-6',
+      data: {
+        message: 'Hello Vue!'
+      }
+    })
+    
+    var app5 = new Vue({
+      el: '#app-5',
+      data: {
+        message: 'Hello Vue.js!'
+      },
+      methods: {
+        reverseMessage: function () {
+          this.message = this.message.split('').reverse().join('')
+        }
+      }
+    })
+    
+    var app4 = new Vue({
+      el: '#app-4',
+      data: {
+        todos: [
+          { text: 'Learn JavaScript' },
+          { text: 'Learn Vue' },
+          { text: 'Build something awesome' }
+        ]
+      }
+    })
+    
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: "Hello Navjeet's Vue!"
+      }
+    })
+    
+    var app2 = new Vue({
+      el: '#app-2',
+      data: {
+        hover_message: 'You loaded this page on ' + new Date().toLocaleString()
+      }
+    })
+    
+    var app3 = new Vue({
+      el: '#app-3',
+      data: {
+        seen: true
+      }
+    })
+    
+  </script>
+</body>
+</html>
